@@ -1,7 +1,7 @@
 package fi.academy.loppuprojekti_rest;
 
-import fi.academy.loppuprojekti_rest.Entities.Restaurants;
-import fi.academy.loppuprojekti_rest.Repositories.RestaurantRepo;
+import fi.academy.loppuprojekti_rest.Entities.Destination;
+import fi.academy.loppuprojekti_rest.Repositories.DestinationRepo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,13 +16,12 @@ public class LoppuprojektiRestApplication {
 
 
 	@Bean
-	CommandLineRunner initDatabase(RestaurantRepo restaurantRepo) {
+	CommandLineRunner initDatabase(DestinationRepo dr) {
 		return args -> {
-			Restaurants r = new Restaurants("Chinese Restaurant", "Great food, cheap and tasty", "Chinese");
-			restaurantRepo.save(r);
-
-			restaurantRepo.save(new Restaurants("PizzaPalace", "A good place for lunch", "Italian"));
-			restaurantRepo.save(new Restaurants("Finnjävel", "Finnish fine dining", "Fine dining"));
+			Destination r = new Destination("restaurant", "Chinatown",  "China", "Peking", "Great food, cheap and tasty");
+			dr.save(r);
+			dr.save(new Destination("restaurant", "Chinatown",  "China", "Peking", "Great food, cheap and tasty"));
+			dr.save(new Destination("restaurant", "Chinatown",  "China", "Peking", "Great food, cheap and tasty"));
 		};
 	}
 }

@@ -4,32 +4,43 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
-public class Restaurants {
+public class Destination {
     @Id
     @GeneratedValue
     private Integer id;
+    @NotNull
+    private String category;
+    @NotNull
     private String name;
     private String address;
     private float latitude;
     private float longitude;
+    @NotNull
+    private String country;
+    @NotNull
+    private String city;
     private Timestamp dateAndTime = new Timestamp(new Date().getTime());
+    private String subcategory;
     @Lob
     private String description;
     private Integer rating;
     private Integer priceRange;
-    private String type;
+    private Boolean breakfastIncluded;
 
-    public Restaurants() {
+    public Destination() {
     }
 
-    public Restaurants (String name, String description, String type) {
+    public Destination(@NotNull String category, @NotNull String name, @NotNull String country, @NotNull String city, String description) {
+        this.category = category;
         this.name = name;
+        this.country = country;
+        this.city = city;
         this.description = description;
-        this.type = type;
     }
 
     public Integer getId() {
@@ -38,6 +49,14 @@ public class Restaurants {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getName() {
@@ -72,12 +91,36 @@ public class Restaurants {
         this.longitude = longitude;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     public Timestamp getDateAndTime() {
         return dateAndTime;
     }
 
     public void setDateAndTime(Timestamp dateAndTime) {
         this.dateAndTime = dateAndTime;
+    }
+
+    public String getSubcategory() {
+        return subcategory;
+    }
+
+    public void setSubcategory(String subcategory) {
+        this.subcategory = subcategory;
     }
 
     public String getDescription() {
@@ -104,11 +147,11 @@ public class Restaurants {
         this.priceRange = priceRange;
     }
 
-    public String getType() {
-        return type;
+    public Boolean getBreakfastIncluded() {
+        return breakfastIncluded;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setBreakfastIncluded(Boolean breakfastIncluded) {
+        this.breakfastIncluded = breakfastIncluded;
     }
 }

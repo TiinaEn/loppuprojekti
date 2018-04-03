@@ -1,7 +1,6 @@
 package fi.academy.loppuprojekti_rest.Controllers;
-import fi.academy.loppuprojekti_rest.Entities.Restaurants;
+import fi.academy.loppuprojekti_rest.Entities.Destination;
 import fi.academy.loppuprojekti_rest.Repositories.*;
-import jdk.nashorn.internal.runtime.arrays.IteratorAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,26 +12,19 @@ import java.net.URI;
 public class Controller {
 
 @Autowired
-    private RestaurantRepo rr;
-@Autowired
-    private HotelRepo hr;
-@Autowired
-    private ShopRepo sr;
-@Autowired
-    private SightRepo sir;
-@Autowired
-    private OtherRepo or;
+    private DestinationRepo dr;
 
-@GetMapping ("/restaurants")
-    public Iterable<Restaurants> haeRavintolat() {
-        Iterable<Restaurants> iteRestaurants = rr.findAll();
-        return iteRestaurants;
+
+@GetMapping ("/destinations")
+    public Iterable<Destination> findDestinations() {
+        Iterable<Destination> iteDestination = dr.findAll();
+        return iteDestination;
     }
 
-@PostMapping ("/createRestaurant")
-    public ResponseEntity<?> createRestaurant (@RequestBody Restaurants restaurant) {
-    Restaurants saved = rr.save(restaurant);
-    String  address = "http://localhost:8080/createRestaurant/"+saved.getId();
+@PostMapping ("/create")
+    public ResponseEntity<?> createDestination (@RequestBody Destination destination) {
+    Destination saved = dr.save(destination);
+    String  address = "http://localhost:8080/create/"+saved.getId();
     return ResponseEntity.created(URI.create(address)).build();
 }
 
