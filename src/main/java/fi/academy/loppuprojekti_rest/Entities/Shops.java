@@ -1,17 +1,23 @@
 package fi.academy.loppuprojekti_rest.Entities;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Lob;
 import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
 public class Shops {
+    @Id
+    @GeneratedValue
     private Integer id;
     private String name;
     private String address;
     private float latitude;
     private float longitude;
     private Timestamp dateAndTime = new Timestamp(new Date().getTime());
+    @Lob
     private String description;
     private String type;
 

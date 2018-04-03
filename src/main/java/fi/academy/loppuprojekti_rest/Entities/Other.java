@@ -1,10 +1,15 @@
 package fi.academy.loppuprojekti_rest.Entities;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Lob;
 import java.sql.Timestamp;
 import java.util.Date;
 @Entity
 public class Other {
+    @Id
+    @GeneratedValue
     private Integer id;
     private String type;
     private String name;
@@ -12,6 +17,7 @@ public class Other {
     private float latitude;
     private float longitude;
     private Timestamp dateAndTime = new Timestamp(new Date().getTime());
+    @Lob
     private String description;
     private Integer rating;
     private Integer priceRange;
