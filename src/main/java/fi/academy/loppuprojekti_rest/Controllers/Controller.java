@@ -1,9 +1,12 @@
 package fi.academy.loppuprojekti_rest.Controllers;
+import fi.academy.loppuprojekti_rest.Entities.Restaurants;
 import fi.academy.loppuprojekti_rest.Repositories.*;
+import jdk.nashorn.internal.runtime.arrays.IteratorAction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/travelapp")
@@ -20,8 +23,19 @@ public class Controller {
 @Autowired
     private OtherRepo or;
 
-/*@GetMapping ("/restaurants")
-    public */
+@GetMapping ("/restaurants")
+    public Iterable<Restaurants> haeRavintolat() {
+        Iterable<Restaurants> iteRestaurants = rr.findAll();
+        return iteRestaurants;
+    }
+
+@PostMapping ("/createRestaurant")
+    public ResponseEntity<?> createRestaurant (@RequestBody Restaurants restaurant) {
+    Restaurants saved = rr.save(restaurant);
+    String  address = "http://localhost:8080/createRestaurant/"+saved.getId();
+    return ResponseEntity.created(URI.create(address)).build();
+}
+
 
 
 
