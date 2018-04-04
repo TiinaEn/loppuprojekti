@@ -12,32 +12,33 @@ import java.util.Optional;
 @RequestMapping("/travelapp")
 public class Controller {
 
-@Autowired
-    private DestinationRepo dr;
+    @Autowired
+    private DestinationRepo destinationRepo;
+    
 
 @GetMapping ("/destinations")
     public Iterable<Destination> findDestinations() {
-        Iterable<Destination> iteDestination = dr.findAll();
+        Iterable<Destination> iteDestination = destinationRepo.findAll();
         return iteDestination;
     }
 @PostMapping ("/create")
     public ResponseEntity<?> createDestination (@RequestBody Destination destination) {
-    Destination saved = dr.save(destination);
+    Destination saved = destinationRepo.save(destination);
     String  address = "http://localhost:8080/create/"+saved.getId();
     return ResponseEntity.created(URI.create(address)).build();
 }
 @DeleteMapping("/remove/{id}")
     public ResponseEntity<?> removeDestination(@PathVariable Integer id, @RequestBody Destination destination) {
     destination.setId(id);
-    dr.delete(destination);
+    destinationRepo.delete(destination);
     return ResponseEntity.noContent().build();
 }
 @GetMapping ("/find/{name}")
-    public Destination findByName(@PathVariable("name") String name) {
-    Optional<Destination> optDest = dr.findByName(name);
-if (optDest.isPresent())
-    return optDest.get();
-    return null;
+    public ResponseEntity<Destination> findByName(@PathVariable("name") String name) {
+    Optional<Destination> optDest = destinationRepo.findByName(name);
+    if (optDest.isPresent())
+        return ResponseEntity.ok(optDest.get());
+    return ResponseEntity.notFound().build();
 
 }
 

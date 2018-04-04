@@ -18,10 +18,10 @@ public class LoppuprojektiRestApplication {
 	@Bean
 	CommandLineRunner initDatabase(DestinationRepo dr) {
 		return args -> {
-			Destination r = new Destination("restaurant", "Chinatown",  "China", "Peking", "Great food, cheap and tasty");
+			Destination r = new Destination("restaurant", "Chinatown",  "China", "Beijing", "Great food, cheap and tasty");
 			dr.save(r);
-			dr.save(new Destination("restaurant", "Chinatown",  "China", "Peking", "Great food, cheap and tasty"));
-			dr.save(new Destination("restaurant", "Chinatown",  "China", "Peking", "Great food, cheap and tasty"));
+			dr.save(new Destination("restaurant", "JavaHut",  "Belgium", "Brussels", "Best coffee in town, free wifi"));
+			dr.save(new Destination("restaurant", "Ikea",  "Finland", "Vantaa", "Cheap meatballs"));
 		};
 	}
 }
