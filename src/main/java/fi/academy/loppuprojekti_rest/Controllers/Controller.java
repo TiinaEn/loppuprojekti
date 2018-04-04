@@ -2,12 +2,11 @@ package fi.academy.loppuprojekti_rest.Controllers;
 import fi.academy.loppuprojekti_rest.Entities.Destination;
 import fi.academy.loppuprojekti_rest.Repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/travelapp")
@@ -35,11 +34,11 @@ public class Controller {
     return ResponseEntity.noContent().build();
 }
 
-@GetMapping("/find") // /find?n=  etsii hakutulokset nimen perusteella, pitää lisätä vielä muut hakuparametrit
-    public Iterable<Destination> filterDestinations (@RequestParam(name="n", required = false) String searchword) {
+@GetMapping("/find") //hakusanalla ei löydy mitään -toiminto puuttuu vielä
+    public ResponseEntity<?> filterDestinations (@RequestParam(name="n", required = false) String searchword) {
         if(searchword == null)
-            return destinationRepo.findAll();
-        return destinationRepo.findByNameContains(searchword);
+            return ResponseEntity.ok(destinationRepo.findAll());
+        return ResponseEntity.ok(destinationRepo.findBySearchWord(searchword));
 }
 
 }
