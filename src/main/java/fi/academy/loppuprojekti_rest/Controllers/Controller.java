@@ -2,6 +2,7 @@ package fi.academy.loppuprojekti_rest.Controllers;
 import fi.academy.loppuprojekti_rest.Entities.Destination;
 import fi.academy.loppuprojekti_rest.Repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +15,7 @@ public class Controller {
 
     @Autowired
     private DestinationRepo destinationRepo;
-    
+
 
 @GetMapping ("/destinations")
     public Iterable<Destination> findDestinations() {
@@ -33,12 +34,13 @@ public class Controller {
     destinationRepo.delete(destination);
     return ResponseEntity.noContent().build();
 }
-@GetMapping ("/find/{name}")
-    public ResponseEntity<Destination> findByName(@PathVariable("name") String name) {
-    Optional<Destination> optDest = destinationRepo.findByName(name);
-    if (optDest.isPresent())
-        return ResponseEntity.ok(optDest.get());
-    return ResponseEntity.notFound().build();
+
+@GetMapping("/find") // /find?n=  etsii hakutulokset nimen perusteella, pitää lisätä vielä muut hakuparametrit
+    public Iterable<Destination> filterDestinations (@RequestParam(name="n", required = false) String searchword) {
+        if(searchword == null)
+            return destinationRepo.findAll();
+        return destinationRepo.findByNameContains(searchword);
+}
 
 }
 
@@ -46,5 +48,3 @@ public class Controller {
 
 
 
-
-}

@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface DestinationRepo extends CrudRepository <Destination, Integer> {
     Optional<Destination> findByName(String name);
+    Iterable<Destination> findByNameContains(String name);
 }
