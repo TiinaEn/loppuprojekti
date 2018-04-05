@@ -1,4 +1,5 @@
 package fi.academy.loppuprojekti_rest.Controllers;
+
 import fi.academy.loppuprojekti_rest.Entities.Destination;
 import fi.academy.loppuprojekti_rest.Entities.User;
 import fi.academy.loppuprojekti_rest.Repositories.*;
@@ -13,40 +14,43 @@ import java.net.URI;
 @RequestMapping("/travelapp")
 public class Controller {
 
-@Autowired
+    @Autowired
     private DestinationRepo destinationRepo;
 
 
-@GetMapping ("/destinations")
+    @GetMapping("/destinations")
     public Iterable<Destination> findDestinations() {
         Iterable<Destination> iteDestination = destinationRepo.findAll();
         return iteDestination;
     }
-@PostMapping ("/create")
-    public ResponseEntity<?> createDestination (@RequestBody Destination destination) {
-    Destination saved = destinationRepo.save(destination);
-    String  address = "http://localhost:8080/create/"+saved.getId();
-    return ResponseEntity.created(URI.create(address)).build();
-}
-@DeleteMapping("/remove/{id}")
-    public ResponseEntity<?> removeDestination(@PathVariable Integer id, @RequestBody Destination destination) {
-    destination.setId(id);
-    destinationRepo.delete(destination);
-    return ResponseEntity.noContent().build();
-}
 
-@GetMapping("/find") //hakusanalla ei löydy mitään -toiminto puuttuu vielä
-    public ResponseEntity<?> filterDestinations (@RequestParam(name="n", required = false) String searchword, User user) {
-        if(searchword == null)
+    @PostMapping("/create")
+    public ResponseEntity<?> createDestination(@RequestBody Destination destination) {
+        Destination saved = destinationRepo.save(destination);
+        String address = "http://localhost:8080/create/" + saved.getId();
+        return ResponseEntity.created(URI.create(address)).build();
+    }
+
+    @DeleteMapping("/remove/{id}")
+    public ResponseEntity<?> removeDestination(@PathVariable Integer id, @RequestBody Destination destination) {
+        destination.setId(id);
+        destinationRepo.delete(destination);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/find") //hakusanalla ei löydy mitään -toiminto puuttuu vielä
+    public ResponseEntity<?> filterDestinations(@RequestParam(name = "n", required = false) String searchword, User user) {
+        if (searchword == null)
             return ResponseEntity.ok(destinationRepo.findAll());
         return ResponseEntity.ok(destinationRepo.findBySearchWord(searchword, user));
-}
-@PutMapping("/modify") //leenalla kesken
-    public ResponseEntity<?> modifyDestination (){
-    return null;
-}
+    }
 
-
+    @PutMapping("/destinations/{id}")
+    public String modify(@PathVariable(name = "id") Integer id, @RequestBody Destination destination) {
+        destination.setId(id);
+        destinationRepo.save(destination);
+        return "jee";
+    }
 }
 
 
