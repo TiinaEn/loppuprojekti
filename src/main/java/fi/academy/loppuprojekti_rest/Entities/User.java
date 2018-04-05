@@ -1,5 +1,7 @@
 package fi.academy.loppuprojekti_rest.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -15,9 +17,10 @@ public class User {
     private String role;
     private int active;
     private String description;
-    @ManyToOne
-    private List<User> friends;
+  /*  @ManyToOne
+    private List<User> friends;*/
     @OneToMany (mappedBy = "user")
+    @JsonIgnore
     private List<Destination> destinations;
 
     public String getUsername() {
@@ -68,13 +71,13 @@ public class User {
         this.description = description;
     }
 
-    public List<User> getFriends() {
+   /* public List<User> getFriends() {
         return friends;
     }
 
     public void setFriends(List<User> friends) {
         this.friends = friends;
-    }
+    }*/
 
     public User() {
     }

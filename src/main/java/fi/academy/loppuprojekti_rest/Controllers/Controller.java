@@ -1,5 +1,6 @@
 package fi.academy.loppuprojekti_rest.Controllers;
 import fi.academy.loppuprojekti_rest.Entities.Destination;
+import fi.academy.loppuprojekti_rest.Entities.User;
 import fi.academy.loppuprojekti_rest.Repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,10 +36,10 @@ public class Controller {
 }
 
 @GetMapping("/find") //hakusanalla ei löydy mitään -toiminto puuttuu vielä
-    public ResponseEntity<?> filterDestinations (@RequestParam(name="n", required = false) String searchword) {
+    public ResponseEntity<?> filterDestinations (@RequestParam(name="n", required = false) String searchword, User user) {
         if(searchword == null)
             return ResponseEntity.ok(destinationRepo.findAll());
-        return ResponseEntity.ok(destinationRepo.findBySearchWord(searchword));
+        return ResponseEntity.ok(destinationRepo.findBySearchWord(searchword, user));
 }
 @PutMapping("/modify") //leenalla kesken
     public ResponseEntity<?> modifyDestination (){
