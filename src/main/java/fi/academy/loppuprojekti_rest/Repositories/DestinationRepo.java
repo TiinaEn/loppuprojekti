@@ -36,4 +36,7 @@ public interface DestinationRepo extends CrudRepository <Destination, Integer> {
             ("SELECT d FROM Destination d where d.country = :country and d.city = :city and d.name = :name and d.user = :user")
     Iterable<Destination> findDestination(@Param("country") String country, @Param("city") String city, @Param("name") String name, @Param("user") User user);
 
+    @Query
+            ("SELECT d FROM Destination d where d.user = :user")
+    Iterable<Destination> findAllByUser(@Param("user") User user);
 }

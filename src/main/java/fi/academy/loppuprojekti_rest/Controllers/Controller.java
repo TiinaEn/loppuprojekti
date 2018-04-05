@@ -20,14 +20,15 @@ public class Controller {
 
 
     @GetMapping("/destinations")
-    public Iterable<Destination> findDestinations() {
+    public Iterable<Destination> findDestinations( /* Authentication authentication */) {
+       // Iterable<Destination> iteDestination = destinationRepo.findAllByUser(authentication.getUser().getUsername);
         Iterable<Destination> iteDestination = destinationRepo.findAll();
         return iteDestination;
     }
 
     @GetMapping ("/destinations/{id}")
-    public ResponseEntity<Destination> findOneDestination(@PathVariable(name = "id") Integer id) {
-        Optional<Destination> optDest = destinationRepo.findById(id);
+    public ResponseEntity<Destination> findOneDestination(@PathVariable(name = "id") Integer id /*tänne authentication-parametri*/) {
+        Optional<Destination> optDest = destinationRepo.findById(id); //tännekin joku user-hässäkkä
         if (!optDest.isPresent()) {
             return ResponseEntity.notFound().build();
         }
@@ -60,8 +61,8 @@ public class Controller {
     @GetMapping("/find") //hakusanalla ei löydy mitään -toiminto puuttuu vielä
     public ResponseEntity<?> filterDestinations(@RequestParam(name = "n", required = false) String searchword, User user) {
         if (searchword == null)
-            return ResponseEntity.ok(destinationRepo.findAll());
-        return ResponseEntity.ok(destinationRepo.findBySearchWord(searchword, user));
+            return ResponseEntity.ok(destinationRepo.findAllByUser(user));
+        return ResponseEntity.ok(destinationRepo.findBySearchWord(searchword, user)); //huomioi myös tyhjä tulos frontissa
     }
 
 }
