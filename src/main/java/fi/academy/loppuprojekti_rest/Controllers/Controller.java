@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.Optional;
 
 
 @RestController
@@ -24,18 +25,36 @@ public class Controller {
         return iteDestination;
     }
 
+    @GetMapping ("/destinations/{id}")
+    public ResponseEntity<Destination> findOneDestination(@PathVariable(name = "id") Integer id) {
+        Optional<Destination> optDest = destinationRepo.findById(id);
+        if (!optDest.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(optDest.get());
+    }
+
+    @PutMapping("/destinations/{id}")
+    public ResponseEntity<?> modifyDestination (@PathVariable(name = "id") Integer id, @RequestBody Destination destination) {
+        destination.setId(id);
+        destinationRepo.save(destination);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/destinations/{id}")
+    public ResponseEntity<?> removeDestination(@PathVariable (name = "id") Integer id) {
+        if (!destinationRepo.findById(id).isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        destinationRepo.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("/create")
     public ResponseEntity<?> createDestination(@RequestBody Destination destination) {
         Destination saved = destinationRepo.save(destination);
-        String address = "http://localhost:8080/create/" + saved.getId();
+        String  address = "http://localhost:8080/travelapp/destinations/"+saved.getId();
         return ResponseEntity.created(URI.create(address)).build();
-    }
-
-    @DeleteMapping("/remove/{id}")
-    public ResponseEntity<?> removeDestination(@PathVariable Integer id, @RequestBody Destination destination) {
-        destination.setId(id);
-        destinationRepo.delete(destination);
-        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/find") //hakusanalla ei löydy mitään -toiminto puuttuu vielä
@@ -45,12 +64,6 @@ public class Controller {
         return ResponseEntity.ok(destinationRepo.findBySearchWord(searchword, user));
     }
 
-    @PutMapping("/destinations/{id}")
-    public String modify(@PathVariable(name = "id") Integer id, @RequestBody Destination destination) {
-        destination.setId(id);
-        destinationRepo.save(destination);
-        return "jee";
-    }
 }
 
 
