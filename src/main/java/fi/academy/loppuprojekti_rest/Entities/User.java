@@ -3,6 +3,7 @@ package fi.academy.loppuprojekti_rest.Entities;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
@@ -16,6 +17,8 @@ public class User {
     private String description;
     @ManyToOne
     private List<User> friends;
+    @OneToMany (mappedBy = "username")
+    private List<Destination> destinations;
 
     public String getUsername() {
         return username;
@@ -74,5 +77,22 @@ public class User {
     }
 
     public User() {
+    }
+
+    public User(String username, String password, String email, String role, int active, String description) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.active = active;
+        this.description = description;
+    }
+
+    public List<Destination> getDestinations() {
+        return destinations;
+    }
+
+    public void setDestinations(List<Destination> destinations) {
+        this.destinations = destinations;
     }
 }

@@ -1,9 +1,6 @@
 package fi.academy.loppuprojekti_rest.Entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -32,17 +29,21 @@ public class Destination {
     private Integer priceRange;
     private Boolean breakfastIncluded;
     private String weblink;
+    @ManyToOne
+    @JoinColumn (name = "username")
+    private User username;
 
 
     public Destination() {
     }
 
-    public Destination(@NotNull String category, @NotNull String name, @NotNull String country, @NotNull String city, String description) {
+    public Destination(@NotNull String category, @NotNull String name, @NotNull String country, @NotNull String city, String description, User username) {
         this.category = category;
         this.name = name;
         this.country = country;
         this.city = city;
         this.description = description;
+        this.username = username;
     }
 
     public Integer getId() {
@@ -161,4 +162,7 @@ public class Destination {
 
     public void setWeblink(String weblink) { this.weblink = weblink; }
 
+    public User getUsername() { return username; }
+
+    public void setUsername(User username) { this.username = username; }
 }

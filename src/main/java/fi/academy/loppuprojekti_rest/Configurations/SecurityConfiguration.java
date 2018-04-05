@@ -2,7 +2,6 @@ package fi.academy.loppuprojekti_rest.Configurations;
 import fi.academy.loppuprojekti_rest.Entities.User;
 import fi.academy.loppuprojekti_rest.Repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -39,10 +38,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                .passwordEncoder(bCryptPasswordEncoder);
     }
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder;
-    }
+
 
 }
