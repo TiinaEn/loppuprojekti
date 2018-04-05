@@ -17,7 +17,7 @@ public class User {
     private String description;
     @ManyToOne
     private List<User> friends;
-    @OneToMany (mappedBy = "username")
+    @OneToMany (mappedBy = "user")
     private List<Destination> destinations;
 
     public String getUsername() {

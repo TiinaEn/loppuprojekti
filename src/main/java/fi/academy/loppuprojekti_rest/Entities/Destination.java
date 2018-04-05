@@ -30,20 +30,20 @@ public class Destination {
     private Boolean breakfastIncluded;
     private String weblink;
     @ManyToOne
-    @JoinColumn (name = "username")
-    private User username;
+    @JoinColumn (name = "user")
+    private User user;
 
 
     public Destination() {
     }
 
-    public Destination(@NotNull String category, @NotNull String name, @NotNull String country, @NotNull String city, String description, User username) {
+    public Destination(@NotNull String category, @NotNull String name, @NotNull String country, @NotNull String city, String description, User user) {
         this.category = category;
         this.name = name;
         this.country = country;
         this.city = city;
         this.description = description;
-        this.username = username;
+        this.user = user;
     }
 
     public Integer getId() {
@@ -162,7 +162,7 @@ public class Destination {
 
     public void setWeblink(String weblink) { this.weblink = weblink; }
 
-    public User getUsername() { return username; }
+    public User getUser() { return user; }
 
-    public void setUsername(User username) { this.username = username; }
+    public void setUser(User user) { this.user = user; }
 }
