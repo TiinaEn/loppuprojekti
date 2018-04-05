@@ -12,7 +12,7 @@ import java.net.URI;
 @RequestMapping("/travelapp")
 public class Controller {
 
-    @Autowired
+@Autowired
     private DestinationRepo destinationRepo;
 
 
@@ -40,6 +40,11 @@ public class Controller {
             return ResponseEntity.ok(destinationRepo.findAll());
         return ResponseEntity.ok(destinationRepo.findBySearchWord(searchword));
 }
+@PutMapping("/modify") //leenalla kesken
+    public ResponseEntity<?> modifyDestination (){
+    return null;
+}
+
 
 }
 

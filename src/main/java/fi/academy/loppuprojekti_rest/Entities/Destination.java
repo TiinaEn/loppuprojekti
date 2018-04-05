@@ -31,6 +31,8 @@ public class Destination {
     private Integer rating;
     private Integer priceRange;
     private Boolean breakfastIncluded;
+    private String weblink;
+
 
     public Destination() {
     }
@@ -154,4 +156,9 @@ public class Destination {
     public void setBreakfastIncluded(Boolean breakfastIncluded) {
         this.breakfastIncluded = breakfastIncluded;
     }
+
+    public String getWeblink() { return weblink; }
+
+    public void setWeblink(String weblink) { this.weblink = weblink; }
+
 }
