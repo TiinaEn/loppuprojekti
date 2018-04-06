@@ -46,6 +46,18 @@ public class Destination {
         this.user = user;
     }
 
+    public Destination(@NotNull String category, @NotNull String name, String address, @NotNull String country, @NotNull String city, String description, Integer rating, String weblink, User user) {
+        this.category = category;
+        this.name = name;
+        this.address = address;
+        this.country = country;
+        this.city = city;
+        this.description = description;
+        this.rating = rating;
+        this.weblink = weblink;
+        this.user = user;
+    }
+
     public Integer getId() {
         return id;
     }
