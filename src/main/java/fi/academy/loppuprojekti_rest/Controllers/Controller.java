@@ -22,7 +22,7 @@ public class Controller {
     @GetMapping("/destinations")
     public Iterable<Destination> findDestinations( /* Authentication authentication */) {
        // Iterable<Destination> iteDestination = destinationRepo.findAllByUser(authentication.getUser().getUsername);
-        Iterable<Destination> iteDestination = destinationRepo.findAll();
+        Iterable<Destination> iteDestination = destinationRepo.findByCountry();
         return iteDestination;
     }
 

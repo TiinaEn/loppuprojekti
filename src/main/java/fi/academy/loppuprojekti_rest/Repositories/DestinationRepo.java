@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 public interface DestinationRepo extends CrudRepository <Destination, Integer> {
+
     Optional<Destination> findByName(String name);
 
     Iterable<Destination> findByNameContains(String name);
@@ -39,4 +40,9 @@ public interface DestinationRepo extends CrudRepository <Destination, Integer> {
     @Query
             ("SELECT d FROM Destination d where d.user = :user")
     Iterable<Destination> findAllByUser(@Param("user") User user);
+
+    @Query
+            ("SELECT d FROM Destination d order by d.country asc")
+    Iterable<Destination> findByCountry();
 }
+
