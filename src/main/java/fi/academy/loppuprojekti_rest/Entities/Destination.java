@@ -15,8 +15,8 @@ public class Destination {
     @NotNull
     private String name;
     private String address;
-    private float latitude;
-    private float longitude;
+    private double latitude;
+    private double longitude;
     @NotNull
     private String country;
     @NotNull
@@ -90,7 +90,7 @@ public class Destination {
         this.address = address;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
@@ -98,7 +98,7 @@ public class Destination {
         this.latitude = latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
