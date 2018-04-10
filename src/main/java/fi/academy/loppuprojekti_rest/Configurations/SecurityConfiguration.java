@@ -6,6 +6,7 @@ import fi.academy.loppuprojekti_rest.Security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -71,8 +72,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
              //   .antMatchers("/").permitAll()
                 .antMatchers("/api/auth/**").permitAll()
 
-                .antMatchers("/travelapp/login").permitAll()
-                .antMatchers("travelapp/register").permitAll()
+                .antMatchers(HttpMethod.POST, "/travelapp/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/travelapp/signup").permitAll()
                 .antMatchers("/travelapp/admin/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated().and().csrf().disable()
                 .formLogin()
