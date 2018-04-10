@@ -17,7 +17,8 @@ public class Controller {
 
     @Autowired
     private DestinationRepo destinationRepo;
-
+    @Autowired
+    private UserRepo userRepo;
 
     @GetMapping("/destinations")
     public Iterable<Destination> findDestinations( /* Authentication authentication */) {
@@ -60,9 +61,11 @@ public class Controller {
 
     @GetMapping("/find") //hakusanalla ei löydy mitään -toiminto puuttuu vielä
     public ResponseEntity<?> filterDestinations(@RequestParam(name = "n", required = false) String searchword, User user) {
+        Optional<User> u = userRepo.findById("Tiina");
         if (searchword == null)
-            return ResponseEntity.ok(destinationRepo.findAllByUser(user));
-        return ResponseEntity.ok(destinationRepo.findBySearchWord(searchword, user)); //huomioi myös tyhjä tulos frontissa
+            return ResponseEntity.ok(destinationRepo.findAllByUser(u.get()));
+
+        return ResponseEntity.ok(destinationRepo.findBySearchWord(searchword, u.get())); //huomioi myös tyhjä tulos frontissa
     }
 
 }
