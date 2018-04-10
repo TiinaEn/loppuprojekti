@@ -28,7 +28,10 @@ public class LoppuprojektiRestApplication {
 			dr.save(r);
 			dr.save(new Destination("restaurant", "JavaHut",  "Belgium", "Brussels", "Best coffee in town, free wifi", t));
 			dr.save(new Destination("restaurant", "Ikea",  "Finland", "Vantaa", "Cheap meatballs", h));
-			dr.save(new Destination("restaurant", "Rosso",  "Finland", "Helsinki", "Cheap meatballs", h));
+			dr.save(new Destination("restaurant", "Rosso",  "Finland", "Helsinki", "Pizza and pasta", h));
+            dr.save(new Destination("restaurant", "Farang",  "Finland", "Helsinki", "Expensive Asian meatballs", h));
+            dr.save(new Destination("movies", "Tennispalatsi",  "Finland", "Helsinki", "Movies", h));
+
 		};
 	}
 }

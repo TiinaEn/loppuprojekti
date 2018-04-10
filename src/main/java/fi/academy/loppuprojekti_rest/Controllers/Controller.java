@@ -26,13 +26,6 @@ public class Controller {
         return iteDestination;
     }
 
-    @GetMapping("/destinations/{country}")
-    public Iterable<Destination> findDestinationCity(@PathVariable (name = "country") String country  /*Authentication authentication*/ ) {
-        // Iterable<Destination> iteDestination = destinationRepo.findAllByUser(authentication.getUser().getUsername);
-        Iterable<Destination> iteDestinationCity = destinationRepo.findCitiesByCountry(country);
-        return iteDestinationCity;
-    }
-
     @GetMapping ("/destinations/{id}")
     public ResponseEntity<Destination> findOneDestination(@PathVariable(name = "id") Integer id /*tänne authentication-parametri*/) {
         Optional<Destination> optDest = destinationRepo.findById(id); //tännekin joku user-hässäkkä
