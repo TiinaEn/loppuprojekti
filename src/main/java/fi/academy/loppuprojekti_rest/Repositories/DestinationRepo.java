@@ -26,12 +26,12 @@ public interface DestinationRepo extends CrudRepository <Destination, Integer> {
     Iterable<Destination> findCountries(@Param("user") User user);
 
     @Query
-            ("SELECT d.city FROM Destination d where d.country = :country and d.user = :user")
-    Iterable<Destination> findCitiesByCountry(@Param("country") String country, @Param("user") User user);
+            ("SELECT d.city FROM Destination d where d.country = :country ")        // lisää user
+    Iterable<Destination> findCitiesByCountry(@Param("country") String country);
 
     @Query
-            ("SELECT d.name FROM Destination d where d.country = :country and d.city = :city and d.user = :user")
-    Iterable<Destination> findDestinationsByCity(@Param("country") String country, @Param("city") String city, @Param("user") User user);
+            ("SELECT d.name FROM Destination d where d.country = :country and d.city = :city")      //lisää user
+    Iterable<Destination> findDestinationsByCity(@Param("country") String country, @Param("city") String city);
 
     @Query
             ("SELECT d FROM Destination d where d.country = :country and d.city = :city and d.name = :name and d.user = :user")
@@ -44,5 +44,7 @@ public interface DestinationRepo extends CrudRepository <Destination, Integer> {
     @Query
             ("SELECT d FROM Destination d order by d.country asc")
     Iterable<Destination> findByCountry();
+
+
 }
 
