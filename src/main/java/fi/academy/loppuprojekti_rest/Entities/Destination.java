@@ -33,7 +33,6 @@ public class Destination {
     @JoinColumn (name = "user")
     private User user;
 
-
     public Destination() {
     }
 
@@ -177,4 +176,12 @@ public class Destination {
     public User getUser() { return user; }
 
     public void setUser(User user) { this.user = user; }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 }
