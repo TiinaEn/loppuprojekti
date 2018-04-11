@@ -12,11 +12,16 @@ import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.firewall.DefaultHttpFirewall;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableGlobalMethodSecurity(
@@ -42,6 +47,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    public StrictHttpFirewall httpFirewall() {
+        StrictHttpFirewall firewall = new StrictHttpFirewall();
+        firewall.setAllowSemicolon(true);
+        return firewall;
+    }
+
+   /* @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.httpFirewall(StrictHttpFirewall);
+    }*/
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -69,22 +86,43 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
             .authorizeRequests()
+                .antMatchers("/",
+                        "/favicon.ico",
+                        "/**/*.png",
+                        "/**/*.gif",
+                        "/**/*.svg",
+                        "/**/*.jpg",
+                        "/**/*.html",
+                        "/**/*.css",
+                        "/**/*.js")
+                .permitAll()
+//                .antMatchers("/api/auth/**")
+//                .permitAll()
+                .antMatchers("/travelapp/login", "/travelapp/signup")
+                .permitAll()
+//                .antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**")
+//                .permitAll()
+                .anyRequest()
+                .authenticated();
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
              //   .antMatchers("/").permitAll()
-                .antMatchers("/api/auth/**").permitAll()
+/*                .antMatchers("/api/auth/**").permitAll()
 
                 .antMatchers(HttpMethod.POST, "/travelapp/login").permitAll()
+                .antMatchers(HttpMethod.GET, "/travelapp/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/travelapp/signup").permitAll()
                 .antMatchers("/travelapp/admin/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated().and().csrf().disable()
                 .formLogin()
-                .loginPage("/travelapp/login").failureUrl("/login?error=true")
-                .defaultSuccessUrl("/travelapp/home")
+                .loginPage("/travelapp/login").failureUrl("/travelapp/login?error=true")
+//                .defaultSuccessUrl("/travelapp/home")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and().logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/travelapp/logout"))
                 .logoutSuccessUrl("/").and().exceptionHandling()
-                .accessDeniedPage("/access-denied");
+                .accessDeniedPage("/access-denied");*/
     }
 
     @Autowired

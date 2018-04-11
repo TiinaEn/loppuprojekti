@@ -25,6 +25,8 @@
 		<spring-cloud.version>Finchley.M9</spring-cloud.version>
 	</properties>
 
+
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -92,6 +94,5 @@
 			</snapshots>
 		</repository>
 	</repositories>
-
 
 </project>
