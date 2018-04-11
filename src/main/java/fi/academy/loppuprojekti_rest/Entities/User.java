@@ -1,27 +1,59 @@
 package fi.academy.loppuprojekti_rest.Entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 public class User {
-    @Id
+    @Id @GeneratedValue
+    private Long Id;
+    @NotEmpty
     private String username;
+    @NotEmpty
     private String password;
+    private String name;
     private String email;
     private String role;
     private int active;
-    private String description;
-  /*  @ManyToOne
-    private List<User> friends;*/
-    @OneToMany (mappedBy = "user")
-    @JsonIgnore
-    private List<Destination> destinations;
+
+  @ManyToMany
+  @JoinTable(name = "user_role", joinColumns = @JoinColumn(name="user_username"), inverseJoinColumns = @JoinColumn(name="role_id"))
+    public Set<Role> roles;
+
+
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public User(String name, String username, String email, String password) {
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    //    this.authorities = authorities;
+    }
+
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
+    }
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
     public String getUsername() {
         return username;
@@ -63,13 +95,6 @@ public class User {
         this.active = active;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
    /* public List<User> getFriends() {
         return friends;
@@ -88,14 +113,21 @@ public class User {
         this.email = email;
         this.role = role;
         this.active = active;
-        this.description = description;
+
+    }
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
-    public List<Destination> getDestinations() {
+
+  /*  public List<Destination> getDestinations() {
         return destinations;
     }
 
     public void setDestinations(List<Destination> destinations) {
         this.destinations = destinations;
-    }
+    }*/
+
+
 }

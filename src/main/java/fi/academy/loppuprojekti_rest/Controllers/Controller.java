@@ -61,7 +61,7 @@ public class Controller {
 
     @GetMapping("/find") //hakusanalla ei löydy mitään -toiminto puuttuu vielä
     public ResponseEntity<?> filterDestinations(@RequestParam(name = "n", required = false) String searchword, User user) {
-        Optional<User> u = userRepo.findById("Heidi");
+        Optional<User> u = userRepo.findByUsername("Heidi");
         if (searchword == null)
             return ResponseEntity.ok(destinationRepo.findAllByUser(u.get()));
 
