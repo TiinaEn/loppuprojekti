@@ -37,8 +37,8 @@ public class LoppuprojektiRestApplication {
             dr.save(new Destination("restaurant", "Farang",  "Finland", "Helsinki", "Expensive Asian meatballs", h));
             dr.save(new Destination("movies", "Tennispalatsi",  "Finland", "Helsinki", "Movies", h));
             dr.save(new Destination("hotel", "Clarion", null, 60.1598, 24.9220, "Finland", "Helsinki", "Great views over Helsinki. Comfy beds, didn't enjoy the breakfast though.",4,"www.clarion.com",h));
-			rolerepo.save(new Role(ROLE_USER));
-			rolerepo.save(new Role(ROLE_ADMIN));
+			/*rolerepo.save(new Role(ROLE_USER));
+			rolerepo.save(new Role(ROLE_ADMIN));*/
 			System.out.println("Roolit asetettu");
 		};
 	}
