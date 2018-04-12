@@ -25,7 +25,7 @@ public class LoppuprojektiRestApplication {
 	@Bean
 	CommandLineRunner initDatabase(DestinationRepo dr, UserRepo ur, RoleRepository rolerepo) {
 		return args -> {
-//			if (1==1)return;
+			if (1==1)return;
 
 			User h = new User("Heidi", "Heidi", "heidi@heidi.fi", "basic", 1, " ");
 			ur.save(h);
