@@ -25,8 +25,8 @@ public class LoppuprojektiRestApplication {
 	@Bean
 	CommandLineRunner initDatabase(DestinationRepo dr, UserRepo ur, RoleRepository rolerepo) {
 		return args -> {
-			User t = new User("Tiina", "Tiina", "tiina@tiina.fi", "basic", 1, " ");
-			ur.save(t);
+//			if (1==1)return;
+
 			User h = new User("Heidi", "Heidi", "heidi@heidi.fi", "basic", 1, " ");
 			ur.save(h);
 			Destination r = new Destination("restaurant", "Chinatown",  "China", "Beijing", "Great food, cheap and tasty", h);
@@ -39,7 +39,7 @@ public class LoppuprojektiRestApplication {
             dr.save(new Destination("hotel", "Clarion", null, 60.1598, 24.9220, "Finland", "Helsinki", "Great views over Helsinki. Comfy beds, didn't enjoy the breakfast though.",4,"www.clarion.com",h));
 			rolerepo.save(new Role(ROLE_USER));
 			rolerepo.save(new Role(ROLE_ADMIN));
-
+			System.out.println("Roolit asetettu");
 		};
 	}
 }

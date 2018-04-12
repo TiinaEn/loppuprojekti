@@ -8,7 +8,7 @@ import java.util.Set;
 @Entity
 public class User {
     @Id @GeneratedValue
-    private Long Id;
+    private Long id;
     @NotEmpty
     private String username;
     @NotEmpty
@@ -41,11 +41,11 @@ public class User {
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
     public Set<Role> getRoles() {
         return roles;

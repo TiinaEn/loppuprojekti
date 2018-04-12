@@ -3,8 +3,11 @@ package fi.academy.loppuprojekti_rest.Controllers;
 import fi.academy.loppuprojekti_rest.Entities.Destination;
 import fi.academy.loppuprojekti_rest.Entities.User;
 import fi.academy.loppuprojekti_rest.Repositories.*;
+import fi.academy.loppuprojekti_rest.Security.CurrentUser;
+import fi.academy.loppuprojekti_rest.Security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -20,11 +23,16 @@ public class Controller {
     @Autowired
     private UserRepo userRepo;
 
+    //@PreAuthorize("hasRole('USER')")
     @GetMapping("/destinations")
-    public Iterable<Destination> findDestinations( /* Authentication authentication */) {
+    public Iterable<Destination> findDestinations(/*@CurrentUser UserPrincipal userPrincipal*/ /* Authentication authentication */) {
        // Iterable<Destination> iteDestination = destinationRepo.findAllByUser(authentication.getUser().getUsername);
         Iterable<Destination> iteDestination = destinationRepo.findByCountry();
         return iteDestination;
+    /*    Optional <User> user = userRepo.findByUsername(userPrincipal.getName());
+        Iterable<Destination> iteDestination = destinationRepo.findAllByUser(UserPrincipal);
+        return iteDestination;*/
+
     }
 
     @GetMapping ("/destinations/{id}")
@@ -61,7 +69,7 @@ public class Controller {
 
     @GetMapping("/find") //hakusanalla ei löydy mitään -toiminto puuttuu vielä
     public ResponseEntity<?> filterDestinations(@RequestParam(name = "n", required = false) String searchword, User user) {
-        Optional<User> u = userRepo.findByUsername("Heidi");
+        Optional<User> u = userRepo.findByUsername(user.getUsername());
         if (searchword == null)
             return ResponseEntity.ok(destinationRepo.findAllByUser(u.get()));
 

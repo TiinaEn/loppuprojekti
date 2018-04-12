@@ -86,6 +86,7 @@ public class AuthController {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
    //     String rolename = RoleName.ROLE_USER.name();
+        Iterable<Role> roolit = roleRepository.findAll();
         Optional<Role> optUserRole = roleRepository.findByName(RoleName.ROLE_USER);
         Role userRole = optUserRole
                 .orElseThrow(() -> new AppException("User Role not set."));
