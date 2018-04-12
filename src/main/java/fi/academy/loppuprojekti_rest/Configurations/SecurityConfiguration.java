@@ -102,27 +102,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll()
 //                .antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**")
 //                .permitAll()
+                .antMatchers("/travelapp/**").permitAll()//.hasRole("USER")
+        ;
+/*
                 .anyRequest()
                 .authenticated();
+*/
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
-             //   .antMatchers("/").permitAll()
-/*                .antMatchers("/api/auth/**").permitAll()
-
-                .antMatchers(HttpMethod.POST, "/travelapp/login").permitAll()
-                .antMatchers(HttpMethod.GET, "/travelapp/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/travelapp/signup").permitAll()
-                .antMatchers("/travelapp/admin/**").hasAuthority("ADMIN")
-                .anyRequest().authenticated().and().csrf().disable()
-                .formLogin()
-                .loginPage("/travelapp/login").failureUrl("/travelapp/login?error=true")
-//                .defaultSuccessUrl("/travelapp/home")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .and().logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/travelapp/logout"))
-                .logoutSuccessUrl("/").and().exceptionHandling()
-                .accessDeniedPage("/access-denied");*/
     }
 
     @Autowired
