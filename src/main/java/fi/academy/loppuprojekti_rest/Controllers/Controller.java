@@ -2,6 +2,7 @@ package fi.academy.loppuprojekti_rest.Controllers;
 
 import fi.academy.loppuprojekti_rest.Entities.Destination;
 import fi.academy.loppuprojekti_rest.Entities.User;
+import fi.academy.loppuprojekti_rest.Exception.AppException;
 import fi.academy.loppuprojekti_rest.Repositories.*;
 import fi.academy.loppuprojekti_rest.Security.CurrentUser;
 import fi.academy.loppuprojekti_rest.Security.UserPrincipal;
@@ -61,19 +62,27 @@ public class Controller {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createDestination(@RequestBody Destination destination) {
+    public ResponseEntity<?> createDestination(@CurrentUser UserPrincipal userPrincipal, @RequestBody Destination destination) {
+        Optional<User> u = userRepo.findByUsername(userPrincipal.getUsername());
+        destination.setUser(u.get());
         Destination saved = destinationRepo.save(destination);
         String  address = "http://localhost:8080/travelapp/destinations/"+saved.getId();
         return ResponseEntity.created(URI.create(address)).build();
     }
 
-    @GetMapping("/find")
-    public ResponseEntity<?> filterDestinations(@RequestParam(name = "n", required = false) String searchword, User user) {
-        Optional<User> u = userRepo.findByUsername(user.getUsername());
+    @GetMapping("/find/{searchword}")
+    public ResponseEntity<?> filterDestinations( @CurrentUser UserPrincipal userPrincipal, @PathVariable(name = "searchword") String searchword) {
+        if (userPrincipal == null) throw new AppException("User not registered");
+        Optional<User> u = userRepo.findByUsername(userPrincipal.getUsername());
+        User user;
+        if (u.isPresent())
+            user = u.get();
+        else
+            throw new AppException("User not registered");
         if (searchword == null)
-            return ResponseEntity.ok(destinationRepo.findAllByUser(u.get()));
+            return ResponseEntity.ok(destinationRepo.findAllByUser(user));
 
-        return ResponseEntity.ok(destinationRepo.findBySearchWord(searchword, u.get()));
+        return ResponseEntity.ok(destinationRepo.findBySearchWord(searchword, user));
     }
 
 }
