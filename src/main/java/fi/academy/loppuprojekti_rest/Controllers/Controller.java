@@ -36,8 +36,8 @@ public class Controller {
     }
 
     @GetMapping ("/destinations/{id}")
-    public ResponseEntity<Destination> findOneDestination(@PathVariable(name = "id") Integer id /*tänne authentication-parametri*/) {
-        Optional<Destination> optDest = destinationRepo.findById(id); //tännekin joku user-hässäkkä
+    public ResponseEntity<Destination> findOneDestination(@PathVariable(name = "id") Integer id) {
+        Optional<Destination> optDest = destinationRepo.findById(id);
         if (!optDest.isPresent()) {
             return ResponseEntity.notFound().build();
         }
@@ -67,13 +67,13 @@ public class Controller {
         return ResponseEntity.created(URI.create(address)).build();
     }
 
-    @GetMapping("/find") //hakusanalla ei löydy mitään -toiminto puuttuu vielä
+    @GetMapping("/find")
     public ResponseEntity<?> filterDestinations(@RequestParam(name = "n", required = false) String searchword, User user) {
         Optional<User> u = userRepo.findByUsername(user.getUsername());
         if (searchword == null)
             return ResponseEntity.ok(destinationRepo.findAllByUser(u.get()));
 
-        return ResponseEntity.ok(destinationRepo.findBySearchWord(searchword, u.get())); //huomioi myös tyhjä tulos frontissa
+        return ResponseEntity.ok(destinationRepo.findBySearchWord(searchword, u.get()));
     }
 
 }
