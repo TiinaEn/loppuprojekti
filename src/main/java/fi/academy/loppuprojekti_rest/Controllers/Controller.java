@@ -44,14 +44,14 @@ public class Controller {
         return ResponseEntity.ok(optDest.get());
     }
 
-    @PutMapping("/destinations/{id}")
+    @PostMapping("/destinations/modify/{id}")
     public ResponseEntity<?> modifyDestination (@PathVariable(name = "id") Integer id, @RequestBody Destination destination) {
         destination.setId(id);
         destinationRepo.save(destination);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/destinations/{id}")
+    @GetMapping("/destinations/delete/{id}")
     public ResponseEntity<?> removeDestination(@PathVariable (name = "id") Integer id) {
         if (!destinationRepo.findById(id).isPresent()) {
             return ResponseEntity.notFound().build();

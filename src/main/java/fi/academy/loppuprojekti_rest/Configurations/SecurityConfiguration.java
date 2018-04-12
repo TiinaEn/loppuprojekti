@@ -19,6 +19,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.firewall.DefaultHttpFirewall;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
@@ -85,6 +86,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+            .csrf()
+                .disable()
             .authorizeRequests()
                 .antMatchers("/",
                         "/favicon.ico",
@@ -98,6 +101,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll()
 //                .antMatchers("/api/auth/**")
 //                .permitAll()
+                .antMatchers(HttpMethod.DELETE, "/travelapp/**").permitAll()
                 .antMatchers("/travelapp/login", "/travelapp/signup")
                 .permitAll()
 //                .antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**")
