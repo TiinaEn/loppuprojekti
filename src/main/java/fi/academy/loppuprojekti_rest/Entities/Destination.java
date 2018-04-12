@@ -30,7 +30,7 @@ public class Destination {
     private Boolean breakfastIncluded;
     private String weblink;
     @ManyToOne
-    @JoinColumn (name = "user")
+    @JoinColumn(name = "user")
     private User user;
 
     public Destination() {
@@ -107,7 +107,7 @@ public class Destination {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
@@ -115,7 +115,7 @@ public class Destination {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -183,19 +183,21 @@ public class Destination {
         this.breakfastIncluded = breakfastIncluded;
     }
 
-    public String getWeblink() { return weblink; }
-
-    public void setWeblink(String weblink) { this.weblink = weblink; }
-
-    public User getUser() { return user; }
-
-    public void setUser(User user) { this.user = user; }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public String getWeblink() {
+        return weblink;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setWeblink(String weblink) {
+        this.weblink = weblink;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
+
+
