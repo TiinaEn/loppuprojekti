@@ -26,7 +26,7 @@ public class Controller {
 
     //@PreAuthorize("hasRole('USER')")
     @GetMapping("/destinations")
-    public Iterable<Destination> findDestinations(@CurrentUser UserPrincipal userPrincipal /* Authentication authentication */) {
+    public Iterable<Destination> findDestinations(@CurrentUser UserPrincipal userPrincipal) {
        // Iterable<Destination> iteDestination = destinationRepo.findAllByUser(authentication.getUser().getUsername);
         Iterable<Destination> iteDestination = destinationRepo.findByCountry();
         return iteDestination;
