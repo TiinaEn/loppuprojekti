@@ -26,13 +26,20 @@ public class Controller {
 
     //@PreAuthorize("hasRole('USER')")
     @GetMapping("/destinations")
-    public Iterable<Destination> findDestinations(@CurrentUser UserPrincipal userPrincipal /* Authentication authentication */) {
+    public ResponseEntity<?> findDestinations(@CurrentUser UserPrincipal userPrincipal /* Authentication authentication */) {
        // Iterable<Destination> iteDestination = destinationRepo.findAllByUser(authentication.getUser().getUsername);
-        Iterable<Destination> iteDestination = destinationRepo.findByCountry();
-        return iteDestination;
-    /*    Optional <User> user = userRepo.findByUsername(userPrincipal.getName());
-        Iterable<Destination> iteDestination = destinationRepo.findAllByUser(UserPrincipal);
+       /* Iterable<Destination> iteDestination = destinationRepo.findByCountry();
         return iteDestination;*/
+        Optional <User> u = userRepo.findByUsername(userPrincipal.getName());
+      /*  Iterable<Destination> iteDestination = destinationRepo.findAllByUser(UserPrincipal.getUsername());
+        return iteDestination;*/
+
+        User user;
+        if (u.isPresent())
+            user = u.get();
+        else
+            throw new AppException("User not registered");
+        return ResponseEntity.ok(destinationRepo.findAllByUser(user));
 
     }
 
